@@ -29,9 +29,10 @@ namespace TextRPG
                 Console.WriteLine("{0}에서 {1}으로 장비를 변경하였습니다.", equipItem.ItemInfor.iName,item.ItemInfor.iName);
                 item.isEquip = true;
                 equipItem.isEquip = false;
+
             }
 
-            if(item.isEquip && player.equipedItems.Contains(item))
+            if (item.isEquip || player.equipedItems.Contains(item))
             {
                 Console.WriteLine("{0} 장착 해제했습니다.", item.ItemInfor.iName);
                 player.equipedItems.Remove(item);
@@ -44,6 +45,7 @@ namespace TextRPG
                 item.isEquip = true;
             }
             SetItemStats(item, item.isEquip);
+            Thread.Sleep(500);
         }
         /// <summary>
         /// 플레이어의 장착 아이템 확인 유무 없으면 -1 반환
