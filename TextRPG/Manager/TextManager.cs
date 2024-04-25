@@ -65,10 +65,17 @@ namespace TextRPG
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
         }
-        public void InputFiled()
+        public void InputField()
         {
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
+        }
+
+        public void InputFailField()
+        {
+            
+            Console.WriteLine("\n잘못 입력했습니다. 다시 입력해주세요.");
+            Thread.Sleep(500);
         }
 
         public void TileMenu(EStage stageName)
@@ -104,7 +111,7 @@ namespace TextRPG
             Console.WriteLine("\n");
             Console.WriteLine("0. 나가기");
             Console.WriteLine("\n");
-            InputFiled();
+            InputField();
         }
         public void ShowInventory(EStage stage, Player player)
         {
@@ -135,7 +142,7 @@ namespace TextRPG
             Console.WriteLine("[아이템 목록]");
             ShowShopItemList(shop.items, openShop);
             SelectShopMenu(stage);
-            InputFiled();
+            InputField();
         }
         public void SelectShopMenu(EStage stage)
         {
@@ -164,10 +171,10 @@ namespace TextRPG
                 switch(item.itemType)
                 {
                     case EItem.ARMOR:
-                        Console.Write($"- {check}{item.ItemInfor.iName} | 방어력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
+                        Console.WriteLine($"- {check}{item.ItemInfor.iName} | 방어력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
                         break;
                     case EItem.WEAPON:
-                        Console.Write($"- {check}{item.ItemInfor.iName} | 공격력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
+                        Console.WriteLine($"- {check}{item.ItemInfor.iName} | 공격력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
                         break;
                 }
             }

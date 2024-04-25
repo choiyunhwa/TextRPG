@@ -36,7 +36,7 @@ namespace TextRPG
             playerInfor.health = 100;
             playerInfor.power = 10;
             playerInfor.defense = 5;
-            playerInfor.gold = 1500;
+            playerInfor.gold = 5000;
         }
 
         public void BuyItem(int money, Item item)

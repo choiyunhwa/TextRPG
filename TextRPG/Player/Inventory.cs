@@ -15,28 +15,32 @@ namespace TextRPG
         public bool isPower = false;
 
         public PlayerEquipment playerEquip;
-        public void EquipItem(int num)
+        public void EquipItem(int num, Player player)
         {
             Item item = items[num - 1];
-           
-            //이미 장착한 아이템이 있고 장착한 아이템과 같지 않을때
-            //if(CheckEquip(item, player) != 1 ||  !item.Equals(item))
-            //{
-            //    player.equipedItems.Remove(item);
-            //    Console.WriteLine("{0}에서 {1}으로 장비를 변경하였습니다.", item.ItemInfor.iName);
-            //}
+            Item equipItem = player.equipedItems.Find(x => x.itemType == item.itemType);
+            //List안에 같은 옵션의 장비의 정보
+            //이미 장착한 아이템이 있고 장착한 아이템과 같지 않을때          
 
+            if(player.equipedItems.Count > 0 && (CheckEquip(item, player) != 1 ||  !item.Equals(item)))
+            {
+                player.equipedItems.Remove(equipItem);
+                player.equipedItems.Add(item);
+                Console.WriteLine("{0}에서 {1}으로 장비를 변경하였습니다.", equipItem.ItemInfor.iName,item.ItemInfor.iName);
+                item.isEquip = true;
+                equipItem.isEquip = false;
+            }
 
-            if(item.isEquip)
+            if(item.isEquip && player.equipedItems.Contains(item))
             {
                 Console.WriteLine("{0} 장착 해제했습니다.", item.ItemInfor.iName);
-                //player.equipedItems.Remove(item);
+                player.equipedItems.Remove(item);
                 item.isEquip = false;
             }
             else
             {
                 Console.WriteLine("{0} 장착 했습니다.", item.ItemInfor.iName);
-                //player.equipedItems.Add(item);
+                player.equipedItems.Add(item);
                 item.isEquip = true;
             }
             SetItemStats(item, item.isEquip);
@@ -51,6 +55,7 @@ namespace TextRPG
         {
             return player.equipedItems.FindIndex(x => x.itemType.Equals(item.itemType));
         }
+
         public void SetItemStats(Item item, bool isEquip)
         {
             int num = isEquip ? 1 : -1;

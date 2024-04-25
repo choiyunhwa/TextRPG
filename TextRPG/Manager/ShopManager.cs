@@ -42,6 +42,7 @@ namespace TextRPG
                     Console.WriteLine("{0} 구매하였습니다.", item.ItemInfor.iName);
                 }
             }
+            Thread.Sleep(500);
         }
     }
 }
