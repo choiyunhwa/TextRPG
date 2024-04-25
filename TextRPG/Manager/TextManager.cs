@@ -20,6 +20,10 @@ namespace TextRPG
             { EStage.SCENE_INVENTORY_EQUIP, new List<string>{"인벤토리 - 장착 관리","캐릭터의 정보가 표기됩니다." } },
             { EStage.SCENE_SHOP, new List<string>{ "상점", "필요한 아이템을 얻을 수 있는 상점입니다." } },
             { EStage.SCENE_SHOP_BUY, new List<string>{ "상점 - 아이템 구매", "필요한 아이템을 얻을 수 있는 상점입니다." } },
+            { EStage.SCEME_SHOP_SELL, new List<string>{ "상점 - 아이템 판매", "구매한 아이템을 판매할 수 있는 상점입니다." } },
+            { EStage.SCEME_DUNGEON, new List<string>{ "던전입장", "이곳에서는 던전으로 들어가기전 활동을 할 수 있습니다." } },
+            { EStage.SCEME_DUNGEON_CLEAR, new List<string>{ "던전 클리어", " " } },
+
         };
 
         public string SetPlayerInfor()
@@ -154,10 +158,16 @@ namespace TextRPG
                     Console.WriteLine("0. 나가기");
                     break;
                 case EStage.SCENE_SHOP_BUY:
+                case EStage.SCEME_SHOP_SELL:
                     Console.WriteLine("\n0. 나가기");
                     break;
             }
         }
+        public void ShowDungeonMenu()
+        {
+
+        }
+        
         public void ShowInvenItemList(List<Item> items)
         {
             if (items.Count <= 0)

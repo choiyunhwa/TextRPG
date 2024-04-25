@@ -110,6 +110,9 @@ namespace TextRPG
                             case 1:
                                 currentStage = EStage.SCENE_SHOP_BUY;
                                 break;
+                            case 2:
+                                currentStage = EStage.SCEME_SHOP_SELL;
+                                break;
                             default:
                                 gameManager.textManager.InputFailField();
                                 break;
@@ -131,6 +134,23 @@ namespace TextRPG
                             gameManager.textManager.InputFailField();
                         }
                         break;
+                    case EStage.SCEME_SHOP_SELL:
+                        gameManager.textManager.ShowShopMenu(currentStage, gameManager.player, gameManager.shop, true);
+                        selectNum = int.Parse(Console.ReadLine());
+                        if(selectNum == 0)
+                        {
+                            currentStage = EStage.SCENE_SHOP;
+                        }
+                        else if(selectNum <= gameManager.shop.items.Count)
+                        {
+                            gameManager.shop.SellItem(selectNum, gameManager.player);
+                        }
+                        else
+                        {
+                            gameManager.textManager.InputFailField();
+                        }
+                        break;
+
                     default:
                         gameManager.textManager.InputFailField();
                         break;

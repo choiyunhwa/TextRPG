@@ -14,11 +14,21 @@ namespace TextRPG
         SCENE_INVENTORY_EQUIP,
         SCENE_SHOP,
         SCENE_SHOP_BUY,
+        SCEME_SHOP_SELL,
+        SCEME_DUNGEON,
+        SCEME_DUNGEON_CLEAR,
     }
 
     public enum EItem
     {
         WEAPON = 0, //무기
         ARMOR, //갑옷
+    }
+
+    public enum EDifficulty
+    {
+        EASY,
+        MIDDLE,
+        HIGHT,
     }
 }

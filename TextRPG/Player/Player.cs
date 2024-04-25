@@ -14,7 +14,7 @@ namespace TextRPG
         public int power; //공격력
         public int defense; //방어력
         public int health; //방어력
-        public int gold; //골드
+        public float gold; //골드
     }
 
     public struct PlayerEquipment
@@ -43,6 +43,12 @@ namespace TextRPG
         {
             playerInfor.gold -= money;
             invetory.GetItem(item);
+        }
+
+        public void SellItem(int money, Item item)
+        {
+            playerInfor.gold += (money * 0.85f);
+            invetory.SetItem(item);
         }
     }
 }

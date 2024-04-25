@@ -23,7 +23,7 @@ namespace TextRPG
 
         
 
-        public void BuyItem(int num, int money, Player player)
+        public void BuyItem(int num, float money, Player player)
         {
             Item item = items[num - 1];
 
@@ -41,6 +41,23 @@ namespace TextRPG
                     items[num - 1].isBuy = true;
                     Console.WriteLine("{0} 구매하였습니다.", item.ItemInfor.iName);
                 }
+            }
+            Thread.Sleep(500);
+        }
+
+        public void SellItem(int num, Player player)
+        {
+            Item item = items[num - 1];
+
+            if(item.isBuy)
+            {
+                player.SellItem(item.ItemInfor.price, items[num - 1]);
+                Console.WriteLine("{0}을 판매하였습니다.", item.ItemInfor.iName);
+                item.isBuy = false;
+            }
+            else
+            {
+                Console.WriteLine("{0}은 판매 대상이 아닙니다.",item.ItemInfor.iName);
             }
             Thread.Sleep(500);
         }
