@@ -150,6 +150,7 @@ namespace TextRPG
             {
                 case EStage.SCENE_SHOP:
                     Console.WriteLine("\n1. 아이템 구매");
+                    Console.WriteLine("2. 아이템 판매");
                     Console.WriteLine("0. 나가기");
                     break;
                 case EStage.SCENE_SHOP_BUY:
