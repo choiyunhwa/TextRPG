@@ -27,6 +27,7 @@ namespace TextRPG
     {
         public PlayerInfo playerInfor;
         public Inventory invetory = new Inventory();
+        public List<Item> equipedItems = new List<Item>();
         public Player(string _name, string _job)
         {
             playerInfor.name = _name;

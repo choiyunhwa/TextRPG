@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
+    //문제 
+    //값을 두번 입력해야지 해당화면이나옴
+    //화면이 갱신이 안됨
     public class GameStart
     {
         private EStage currentStage = EStage.SCENE_MAIN;
