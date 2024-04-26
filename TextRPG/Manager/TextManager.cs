@@ -24,16 +24,35 @@ namespace TextRPG
             { EStage.SCEME_SHOP_SELL, new List<string>{ "상점 - 아이템 판매", "구매한 아이템을 판매할 수 있는 상점입니다." } },
             { EStage.SCEME_DUNGEON, new List<string>{ "던전입장", "이곳에서는 던전으로 들어가기전 활동을 할 수 있습니다." } },
             { EStage.SCEME_REST, new List<string>{ "휴식하기", "500 G 를 내면 체력을 회복할 수 있습니다."} },
+            { EStage.SCENE_SAVADATA, new List<string>{ "저장하기", "플레이어 정보를 저장할 수 있습니다."} },
 
         };
+
+        public int SelectGameLoad()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("__________________________  ______________    __________ __________   ________ ");
+            Console.WriteLine("\\__    ___/\\_   _____/\\   \\/  /\\__    ___/    \\______   \\\\______   \\ /  _____/ ");
+            Console.WriteLine("  |    |    |    __)_  \\     /   |    |        |       _/ |     ___//   \\  ___  ");
+            Console.WriteLine("  |    |    |        \\ /     \\   |    |        |    |   \\ |    |    \\    \\_\\  \\ ");
+            Console.WriteLine("  |____|   /_______  //___/\\  \\  |____|        |____|_  / |____|     \\______  / ");
+            Console.WriteLine("                   \\/       \\_/                       \\/                    \\/  ");
+            Console.ResetColor();
+
+            Console.WriteLine(" \n\n                          1. 새게임    2. 이어서하기");
+
+            return int.Parse(Console.ReadLine());
+        }
 
         public string SetPlayerInfor()
         {
             string job = "";
             Console.WriteLine("\n\n\n\n");
             Console.Write(String.Format("{0}", "닉네임 : ").PadLeft(42 - (21 - ("닉네임 : ".Length / 2))));
+            
             string nick = Console.ReadLine();
-            Console.WriteLine(String.Format("{0}", "1. 전사 2. 마법사").PadLeft(42 - (21 - ("1. 전사 2. 마법사".Length / 2))));
+            Console.WriteLine("\n");
+            Console.WriteLine(String.Format("{0}", "1. 전사 2. 마법사\n").PadLeft(42 - (21 - ("1. 전사 2. 마법사".Length / 2))));
             Console.Write(String.Format("{0}", "직업 선택 : ").PadLeft(42 - (21 - ("직업 선택 : ".Length / 2))));
             string num = Console.ReadLine();
 
@@ -77,9 +96,11 @@ namespace TextRPG
             Console.WriteLine("3. 상점");
             Console.WriteLine("4. 던전입장");
             Console.WriteLine("5. 휴식하기");
+            Console.WriteLine("6. 저장하기");
         }
         public void InputField()
         {
+            Console.WriteLine("=======================================");
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
             Console.Write(">> ");
         }
@@ -95,11 +116,12 @@ namespace TextRPG
         {
             if (titleInfors.ContainsKey(stageName))
             {
+                
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(titleInfors[stageName][0]);
+                Console.WriteLine($"\n{titleInfors[stageName][0]}");
                 Console.ResetColor();
-                Console.WriteLine($"{titleInfors[stageName][1]}\n\n");
-
+                Console.WriteLine($"{titleInfors[stageName][1]}\n");
+                Console.WriteLine("=======================================\n");
             }
         }
         public void ShowStatusView(EStage stage, Player player)
@@ -126,11 +148,11 @@ namespace TextRPG
             Console.WriteLine("\n");
             InputField();
         }
-        public void ShowInventory(EStage stage, Player player)
+        public void ShowInventory(EStage stage, Player player, bool openInven)
         {
             TileMenu(stage);
             Console.WriteLine("[아이템 목록]");
-            ShowInvenItemList(player.invetory.items);
+            ShowInvenItemList(player.invetory.items, openInven);
             SelectInventoryMenu(stage);
         }
         public void SelectInventoryMenu(EStage stage)
@@ -221,7 +243,6 @@ namespace TextRPG
             Console.WriteLine("\n0. 나가기");
             InputField();
         }
-
         public void ShowRest(EStage stage, Player player)
         {
             TileMenu(stage);
@@ -232,8 +253,17 @@ namespace TextRPG
             InputField();
         }
 
-        public void ShowInvenItemList(List<Item> items)
+        public void ShowSaveDate(EStage stage)
         {
+            TileMenu(stage);
+            Console.WriteLine("1. 저장하기");
+            Console.WriteLine("0. 나가기");
+            InputField();
+        }
+
+        public void ShowInvenItemList(List<Item> items, bool openInven)
+        {
+            int i = 0;
             if (items.Count <= 0)
             {
                 Console.WriteLine("보유한 장비가 없습니다.");
@@ -241,22 +271,22 @@ namespace TextRPG
             }
             foreach (Item item in items)
             {
+                string itemNum = openInven ? $"{++i} " : "";
                 string check = item.isEquip ? "[E] " : "";
 
                 switch(item.itemType)
                 {
                     case EItem.ARMOR:
-                        Console.WriteLine($"- {check}{item.ItemInfor.iName} | 방어력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
+                        Console.WriteLine($"- {itemNum}{check}{item.ItemInfor.iName} | 방어력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
                         break;
                     case EItem.WEAPON:
-                        Console.WriteLine($"- {check}{item.ItemInfor.iName} | 공격력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
+                        Console.WriteLine($"- {itemNum}{check}{item.ItemInfor.iName} | 공격력 +{item.ItemInfor.iDefense} | {item.ItemInfor.explain} ");
                         break;
                 }
             }
         }
         public void ShowShopItemList(List<Item> items, bool openShop)
-        {
-            
+        {            
             int i = 0;
             foreach (Item item in items)
             {

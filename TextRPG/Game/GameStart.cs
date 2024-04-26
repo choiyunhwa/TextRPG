@@ -14,10 +14,7 @@ namespace TextRPG
 
         public void GameIntro(GameManager gameManager)
         {
-            Console.Clear();
-
-            //gameManager.textManager.ShowMainMenu();
-            //gameManager.textManager.InputField();           
+            Console.Clear();        
 
             ShowMainMenu(gameManager);
         }
@@ -31,7 +28,7 @@ namespace TextRPG
                 Console.Clear();
 
                 switch (currentStage)
-                {
+                {                 
                     case EStage.SCENE_MAIN:
                         gameManager.textManager.ShowMainMenu();
                         gameManager.textManager.InputField();
@@ -53,6 +50,9 @@ namespace TextRPG
                             case 5:
                                 currentStage = EStage.SCEME_REST;
                                 break;
+                            case 6:
+                                currentStage = EStage.SCENE_SAVADATA;
+                                break;
                             default:
                                 gameManager.textManager.InputFailField();
                                 break;
@@ -71,7 +71,7 @@ namespace TextRPG
                         }
                         break;
                     case EStage.SCENE_INVENTORY:
-                        gameManager.textManager.ShowInventory(currentStage, gameManager.player);
+                        gameManager.textManager.ShowInventory(currentStage, gameManager.player, false);
                         selectNum = int.Parse(Console.ReadLine());
                         switch (selectNum)
                         {
@@ -87,7 +87,7 @@ namespace TextRPG
                         }
                         break;
                     case EStage.SCENE_INVENTORY_EQUIP:
-                        gameManager.textManager.ShowInventory(currentStage, gameManager.player);
+                        gameManager.textManager.ShowInventory(currentStage, gameManager.player, true);
                         selectNum = int.Parse(Console.ReadLine());
                         if (selectNum == 0)
                         {
@@ -219,6 +219,23 @@ namespace TextRPG
                         {
                             gameManager.textManager.InputFailField();
                         }
+                        break;
+                    case EStage.SCENE_SAVADATA:
+                        gameManager.textManager.ShowSaveDate(currentStage);
+                        selectNum = int.Parse(Console.ReadLine());
+                        if (selectNum == 0)
+                        {
+                            currentStage = EStage.SCENE_MAIN;
+                        }
+                        else if (selectNum == 1)
+                        {
+                            gameManager.gameData.SaveGameData(gameManager.player);
+                        }
+                        else
+                        {
+                            gameManager.textManager.InputFailField();
+                        }
+
                         break;
                     default:
                         gameManager.textManager.InputFailField();

@@ -14,8 +14,8 @@ namespace TextRPG
 
             GameManager gameManager = new GameManager();
 
-            gameManager.gameStart.GameIntro(gameManager);           
-            
+            gameManager.gameStart.GameIntro(gameManager);
+
         }
     }
 }

@@ -20,7 +20,6 @@ namespace TextRPG
             Item item = items[num - 1];
             Item equipItem = player.equipedItems.Find(x => x.itemType == item.itemType);
             
-            //ERROR
             //List안에 같은 옵션의 장비의 정보
             //이미 장착한 아이템이 있고 장착한 아이템과 같지 않을때          
 

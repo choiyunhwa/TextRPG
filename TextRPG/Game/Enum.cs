@@ -8,7 +8,7 @@ namespace TextRPG
 {
     public enum EStage
     {
-        SCENE_MAIN = 0,
+        SCENE_MAIN,
         SCENE_STATUS,
         SCENE_INVENTORY,
         SCENE_INVENTORY_EQUIP,
@@ -18,6 +18,7 @@ namespace TextRPG
         SCEME_DUNGEON,
         SCEME_DUNGEON_RESULT,
         SCEME_REST,
+        SCENE_SAVADATA,
     }
 
     public enum EItem
