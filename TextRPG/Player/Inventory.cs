@@ -24,7 +24,7 @@ namespace TextRPG
             //List안에 같은 옵션의 장비의 정보
             //이미 장착한 아이템이 있고 장착한 아이템과 같지 않을때          
 
-            if(player.equipedItems.Count > 0 && (CheckEquip(item, player) != 1 ||  !item.Equals(item)))
+            if(player.equipedItems.Count > 0 && CheckEquip(item, player) != -1)
             {
                 player.equipedItems.Remove(equipItem);
                 player.equipedItems.Add(item);
@@ -33,8 +33,7 @@ namespace TextRPG
                 equipItem.isEquip = false;
 
             }
-
-            if (item.isEquip || player.equipedItems.Contains(item))
+            else if (item.isEquip || player.equipedItems.Contains(item))
             {
                 Console.WriteLine("{0} 장착 해제했습니다.", item.ItemInfor.iName);
                 player.equipedItems.Remove(item);
