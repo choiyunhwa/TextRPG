@@ -23,7 +23,7 @@ namespace TextRPG
             { EStage.SCENE_SHOP_BUY, new List<string>{ "상점 - 아이템 구매", "필요한 아이템을 얻을 수 있는 상점입니다." } },
             { EStage.SCEME_SHOP_SELL, new List<string>{ "상점 - 아이템 판매", "구매한 아이템을 판매할 수 있는 상점입니다." } },
             { EStage.SCEME_DUNGEON, new List<string>{ "던전입장", "이곳에서는 던전으로 들어가기전 활동을 할 수 있습니다." } },
-            { EStage.SCEME_DUNGEON_RESULT, new List<string>{ "던전 클리어", " " } },
+            { EStage.SCEME_REST, new List<string>{ "휴식하기", "500 G 를 내면 체력을 회복할 수 있습니다."} },
 
         };
 
@@ -210,6 +210,15 @@ namespace TextRPG
             InputField();
         }
 
+        public void ShowRest(EStage stage, Player player)
+        {
+            TileMenu(stage);
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine("{0} G", player.playerInfor.gold);
+            Console.WriteLine("1. 휴식하기");
+            Console.WriteLine("0. 나가기");
+            InputField();
+        }
 
         public void ShowInvenItemList(List<Item> items)
         {

@@ -205,7 +205,20 @@ namespace TextRPG
                         }
                         break;
                     case EStage.SCEME_REST:
+                        gameManager.textManager.ShowRest(currentStage, gameManager.player);
                         selectNum = int.Parse(Console.ReadLine());
+                        if (selectNum == 0)
+                        {
+                            currentStage = EStage.SCENE_MAIN;
+                        }
+                        else if(selectNum == 1)
+                        {
+                            gameManager.rest.RecoveryStrength(gameManager.player);
+                        }
+                        else
+                        {
+                            gameManager.textManager.InputFailField();
+                        }
                         break;
                     default:
                         gameManager.textManager.InputFailField();

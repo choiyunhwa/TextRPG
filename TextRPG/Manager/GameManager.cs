@@ -14,7 +14,7 @@ namespace TextRPG
         public GameStart gameStart;
         public Player player;
         public Dungeon dungeon;
-
+        public Rest rest;
         public GameManager()
         {
             this.textManager = new TextManager();
@@ -25,6 +25,7 @@ namespace TextRPG
             this.gameStart = new GameStart();
             this.player = new Player(splitInfor[0], splitInfor[1]);
             this.dungeon = new Dungeon();
+            this.rest = new Rest();
 
             shop.SettingShopData();
         }
