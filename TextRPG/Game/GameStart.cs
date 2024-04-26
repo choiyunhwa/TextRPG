@@ -185,13 +185,13 @@ namespace TextRPG
                     case EStage.SCEME_DUNGEON_RESULT:
                         if (gameManager.dungeon.ISClear)
                         {
-                            gameManager.textManager.ShowDungeonResult(gameManager.player, gameManager.dungeon.tempHealth, gameManager.dungeon.tempGold, true, gameManager.dungeon.dungeonName);
+                            gameManager.textManager.ShowDungeonResult(gameManager.player, gameManager.dungeon.tempHealth, gameManager.dungeon.tempGold, gameManager.dungeon.tempLevel, true, gameManager.dungeon.dungeonName);
 
                             gameManager.dungeon.ISClear = false;
                         }
                         else
                         {
-                            gameManager.textManager.ShowDungeonResult(gameManager.player, gameManager.dungeon.tempHealth, gameManager.dungeon.tempGold, false, gameManager.dungeon.dungeonName);
+                            gameManager.textManager.ShowDungeonResult(gameManager.player, gameManager.dungeon.tempHealth, gameManager.dungeon.tempGold,gameManager.dungeon.tempLevel, false, gameManager.dungeon.dungeonName);
                         }
 
                         selectNum = int.Parse(Console.ReadLine());

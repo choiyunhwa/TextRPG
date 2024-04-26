@@ -182,10 +182,21 @@ namespace TextRPG
             InputField();
         }
 
-        public void ShowDungeonResult(Player player, int health, float coin, bool check, string type)
+        public void ShowDungeonResult(Player player, int health, float coin, int level, bool check, string type)
         {
             string title = "";
             string explanation = "";
+
+            string text = "전투 중..";
+
+            foreach (char c in text)
+            {
+                Thread.Sleep(100);
+                Console.Write(c);
+            }
+            Thread.Sleep(1000);
+
+            Console.Clear();
 
             if (check)
             {
@@ -203,6 +214,7 @@ namespace TextRPG
             Console.WriteLine(explanation.Insert(6,type));
 
             Console.WriteLine("[탐험 결과]");
+            Console.WriteLine($"LV{level} -> LV{player.playerInfor.level}");
             Console.WriteLine($"체력 {health} -> {player.playerInfor.health}");
             Console.WriteLine($"Gold {coin} -> {player.playerInfor.gold}");
 

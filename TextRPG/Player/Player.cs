@@ -11,7 +11,7 @@ namespace TextRPG
         public string name; //이름
         public int level; //레벨
         public string job; //직업
-        public int power; //공격력
+        public float power; //공격력
         public int defense; //방어력
         public int health; //방어력
         public float gold; //골드
@@ -32,12 +32,19 @@ namespace TextRPG
         public Player(string _name, string _job)
         {
             playerInfor.name = _name;
-            playerInfor.level = 0;
+            playerInfor.level = 1;
             playerInfor.job = _job;
             playerInfor.health = 100;
             playerInfor.power = 10;
             playerInfor.defense = 5;
             playerInfor.gold = 5000;
+        }
+
+        public void LevelUp()
+        {
+            playerInfor.level++;
+            playerInfor.power += 0.5f;
+            playerInfor.defense++;
         }
 
         public void BuyItem(int money, Item item)

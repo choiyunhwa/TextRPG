@@ -15,6 +15,7 @@ namespace TextRPG.Game
         public float tempGold { get; set; }
         public string dungeonName { get; set; }
 
+        private int clearCount = 0;
         public bool ISClear
         {
             get
@@ -29,9 +30,18 @@ namespace TextRPG.Game
 
         public void SelectDungeon(EDifficulty dongon, Player player)
         {
+            string text = "던전 입장 중..";
+
+            foreach (char c in text)
+            {
+                Thread.Sleep(100);
+                Console.Write(c);
+            }
+            Thread.Sleep(400);
             switch (dongon)
             {
                 case EDifficulty.EASY:
+                    
                     dungeonName = "쉬운";
                     SettingDungeon(player, 5, 1000);
                     break;
@@ -56,7 +66,7 @@ namespace TextRPG.Game
 
             int defenseValue = (player.playerInfor.defense + player.playerEquip.defense) - recommended;
             int damage = random.Next(20 - defenseValue, 36 - defenseValue);
-            int powerValue = random.Next(player.playerInfor.power, player.playerInfor.power * 2);
+            int powerValue = random.Next((int)player.playerInfor.power, (int)player.playerInfor.power * 2);
 
             if (player.playerInfor.health > 0)
             {
@@ -109,6 +119,14 @@ namespace TextRPG.Game
                 player.playerInfor.health = 0;
             }
             player.playerInfor.gold += addGold;
+
+            clearCount++;
+
+            if(level == clearCount)
+            {
+                player.LevelUp();
+                clearCount = 0;
+            }
         }
     }
 }
