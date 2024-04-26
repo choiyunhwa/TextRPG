@@ -70,9 +70,9 @@ namespace TextRPG.Game
                     {
                         isClear = false;
 
-                        int newHealth = tempHealth >> 2;
+                        int newHealth = tempHealth >> 1;
 
-                        if (newHealth > tempHealth)
+                        if (newHealth < tempHealth)
                         {
                             player.playerInfor.health -= newHealth;
                         }
