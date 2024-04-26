@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace TextRPG
 {
     public class TextManager
     {
-        
+
         public Dictionary<EStage, List<string>> titleInfors = new Dictionary<EStage, List<string>>()
         {
             { EStage.SCENE_MAIN, new List<string>{"메인 화면","메뉴를 선택해주세요." } },
@@ -22,7 +23,7 @@ namespace TextRPG
             { EStage.SCENE_SHOP_BUY, new List<string>{ "상점 - 아이템 구매", "필요한 아이템을 얻을 수 있는 상점입니다." } },
             { EStage.SCEME_SHOP_SELL, new List<string>{ "상점 - 아이템 판매", "구매한 아이템을 판매할 수 있는 상점입니다." } },
             { EStage.SCEME_DUNGEON, new List<string>{ "던전입장", "이곳에서는 던전으로 들어가기전 활동을 할 수 있습니다." } },
-            { EStage.SCEME_DUNGEON_CLEAR, new List<string>{ "던전 클리어", " " } },
+            { EStage.SCEME_DUNGEON_RESULT, new List<string>{ "던전 클리어", " " } },
 
         };
 
@@ -30,17 +31,17 @@ namespace TextRPG
         {
             string job = "";
             Console.WriteLine("\n\n\n\n");
-            Console.Write(String.Format("{0}", "닉네임 : ").PadLeft(42 - (21 - ("닉네임 : ".Length / 2)))); 
+            Console.Write(String.Format("{0}", "닉네임 : ").PadLeft(42 - (21 - ("닉네임 : ".Length / 2))));
             string nick = Console.ReadLine();
             Console.WriteLine(String.Format("{0}", "1. 전사 2. 마법사").PadLeft(42 - (21 - ("1. 전사 2. 마법사".Length / 2))));
             Console.Write(String.Format("{0}", "직업 선택 : ").PadLeft(42 - (21 - ("직업 선택 : ".Length / 2))));
             string num = Console.ReadLine();
 
-            if(num == "1")
+            if (num == "1")
             {
                 job = "전사";
             }
-            else if(num == "2")
+            else if (num == "2")
             {
                 job = "마법사";
             }
@@ -55,19 +56,27 @@ namespace TextRPG
 
         public void StartGameView()
         {
-            Console.WriteLine("\n\n");
-            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
-            Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
+            string text = "스파르타 마을에 오신 여러분 환영합니다. \n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.";
+            Console.WriteLine("\n");
+            //Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
+            //Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
 
-            ShowMainMenu();
+            foreach(char c in text)
+            {
+                Console.Write(c);
+                Thread.Sleep(40);
+            }
         }
 
         public void ShowMainMenu()
         {
+            StartGameView();
             Console.WriteLine("\n\n");
             Console.WriteLine("1. 상태보기");
             Console.WriteLine("2. 인벤토리");
             Console.WriteLine("3. 상점");
+            Console.WriteLine("4. 던전입장");
+            Console.WriteLine("5. 휴식하기");
         }
         public void InputField()
         {
@@ -77,20 +86,20 @@ namespace TextRPG
 
         public void InputFailField()
         {
-            
+
             Console.WriteLine("\n잘못 입력했습니다. 다시 입력해주세요.");
             Thread.Sleep(500);
         }
 
         public void TileMenu(EStage stageName)
         {
-            if(titleInfors.ContainsKey(stageName))
+            if (titleInfors.ContainsKey(stageName))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(titleInfors[stageName][0]);
                 Console.ResetColor();
                 Console.WriteLine($"{titleInfors[stageName][1]}\n\n");
-                
+
             }
         }
         public void ShowStatusView(EStage stage, Player player)
@@ -100,15 +109,15 @@ namespace TextRPG
             Console.WriteLine("Chad ({0})", player.playerInfor.job);
             Console.Write("공격력 : {0}", player.playerInfor.power);
 
-            
-            if(player.invetory.isPower)
+
+            if (player.invetory.isPower)
             {
-                Console.WriteLine("({0})",player.invetory.playerEquip.power);
+                Console.WriteLine("({0})", player.playerEquip.power);
             }
             Console.Write("\n방어력 : {0}", player.playerInfor.defense);
             if (player.invetory.isDefense)
             {
-                Console.WriteLine(" ( {0} )", player.invetory.playerEquip.defense);
+                Console.WriteLine(" ( {0} )", player.playerEquip.defense);
             }
             Console.WriteLine("\n체 력 : {0}", player.playerInfor.health);
             Console.WriteLine("Gold : {0} G", player.playerInfor.gold);
@@ -126,7 +135,7 @@ namespace TextRPG
         }
         public void SelectInventoryMenu(EStage stage)
         {
-            switch(stage)
+            switch (stage)
             {
                 case EStage.SCENE_INVENTORY:
                     Console.WriteLine("\n1. 장착 관리");
@@ -150,7 +159,7 @@ namespace TextRPG
         }
         public void SelectShopMenu(EStage stage)
         {
-            switch(stage)
+            switch (stage)
             {
                 case EStage.SCENE_SHOP:
                     Console.WriteLine("\n1. 아이템 구매");
@@ -163,11 +172,45 @@ namespace TextRPG
                     break;
             }
         }
-        public void ShowDungeonMenu()
+        public void ShowDungeonMenu(EStage stage)
         {
-
+            TileMenu(stage);
+            Console.WriteLine("1. 쉬운 던전       | 방어력 5 이상 권장");
+            Console.WriteLine("2. 일반 던전       | 방어력 11 이상 권장");
+            Console.WriteLine("3. 어려운 던전     | 방어력 17 이상 권장");
+            Console.WriteLine("0. 나가기");
+            InputField();
         }
-        
+
+        public void ShowDungeonResult(Player player, int health, float coin, bool check, string type)
+        {
+            string title = "";
+            string explanation = "";
+
+            if (check)
+            {
+                title = "던전 클리어";
+                explanation = "축하합니다. \n 던전을 클리어 하였습니다.";
+            }
+            else
+            {
+                title = "던전 실패";
+                explanation = "아쉽습니다. \n 던전을 실패 하였습니다.";
+            }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(title);
+            Console.ResetColor();
+            Console.WriteLine(explanation.Insert(6,type));
+
+            Console.WriteLine("[탐험 결과]");
+            Console.WriteLine($"체력 {health} -> {player.playerInfor.health}");
+            Console.WriteLine($"Gold {coin} -> {player.playerInfor.gold}");
+
+            Console.WriteLine("\n0. 나가기");
+            InputField();
+        }
+
+
         public void ShowInvenItemList(List<Item> items)
         {
             if (items.Count <= 0)

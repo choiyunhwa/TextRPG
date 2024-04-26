@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG.Game;
 
 namespace TextRPG
 {
@@ -12,6 +13,7 @@ namespace TextRPG
         public ShopManager shop;
         public GameStart gameStart;
         public Player player;
+        public Dungeon dungeon;
 
         public GameManager()
         {
@@ -22,6 +24,8 @@ namespace TextRPG
             this.shop = new ShopManager();
             this.gameStart = new GameStart();
             this.player = new Player(splitInfor[0], splitInfor[1]);
+            this.dungeon = new Dungeon();
+
             shop.SettingShopData();
         }
 

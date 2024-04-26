@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    //문제 
-    //값을 두번 입력해야지 해당화면이나옴
-    //화면이 갱신이 안됨
     public class GameStart
     {
         private EStage currentStage = EStage.SCENE_MAIN;
 
         public void GameIntro(GameManager gameManager)
         {
-            gameManager.textManager.StartGameView();
-            gameManager.textManager.InputField();
+            Console.Clear();
 
-            //Console.Clear();
+            //gameManager.textManager.ShowMainMenu();
+            //gameManager.textManager.InputField();           
 
             ShowMainMenu(gameManager);
         }
@@ -48,6 +46,12 @@ namespace TextRPG
                                 break;
                             case 3:
                                 currentStage = EStage.SCENE_SHOP;
+                                break;
+                            case 4:
+                                currentStage = EStage.SCEME_DUNGEON;
+                                break;
+                            case 5:
+                                currentStage = EStage.SCEME_REST;
                                 break;
                             default:
                                 gameManager.textManager.InputFailField();
@@ -150,7 +154,59 @@ namespace TextRPG
                             gameManager.textManager.InputFailField();
                         }
                         break;
+                    case EStage.SCEME_DUNGEON:
+                        gameManager.textManager.ShowDungeonMenu(currentStage);
+                        selectNum = int.Parse(Console.ReadLine());
+                        string dungeonLevel = "";
+                        switch(selectNum)
+                        {
+                            case 0:
+                                currentStage = EStage.SCENE_MAIN;
+                                break;
+                            case 1:
+                                currentStage = EStage.SCEME_DUNGEON_RESULT;
+                                gameManager.dungeon.SelectDungeon(EDifficulty.EASY, gameManager.player);
+                                break;
+                            case 2:
+                                currentStage = EStage.SCEME_DUNGEON_RESULT;
+                                gameManager.dungeon.SelectDungeon(EDifficulty.MIDDLE, gameManager.player);
 
+                                break;
+                            case 3:
+                                currentStage = EStage.SCEME_DUNGEON_RESULT;
+                                gameManager.dungeon.SelectDungeon(EDifficulty.HIGHT, gameManager.player);
+                                break;
+                            default:
+                                gameManager.textManager.InputFailField();
+                                break;
+                        }                        
+                       
+                        break;
+                    case EStage.SCEME_DUNGEON_RESULT:
+                        if (gameManager.dungeon.ISClear)
+                        {
+                            gameManager.textManager.ShowDungeonResult(gameManager.player, gameManager.dungeon.tempHealth, gameManager.dungeon.tempGold, true, gameManager.dungeon.dungeonName);
+
+                            gameManager.dungeon.ISClear = false;
+                        }
+                        else
+                        {
+                            gameManager.textManager.ShowDungeonResult(gameManager.player, gameManager.dungeon.tempHealth, gameManager.dungeon.tempGold, false, gameManager.dungeon.dungeonName);
+                        }
+
+                        selectNum = int.Parse(Console.ReadLine());
+                        if (selectNum == 0)
+                        {
+                            currentStage = EStage.SCEME_DUNGEON;
+                        }
+                        else
+                        {
+                            gameManager.textManager.InputFailField();
+                        }
+                        break;
+                    case EStage.SCEME_REST:
+                        selectNum = int.Parse(Console.ReadLine());
+                        break;
                     default:
                         gameManager.textManager.InputFailField();
                         break;

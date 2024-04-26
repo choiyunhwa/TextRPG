@@ -14,7 +14,7 @@ namespace TextRPG
         public bool isDefense = false;
         public bool isPower = false;
 
-        public PlayerEquipment playerEquip;
+        //public PlayerEquipment playerEquip;
         public void EquipItem(int num, Player player)
         {
             Item item = items[num - 1];
@@ -46,7 +46,7 @@ namespace TextRPG
                 player.equipedItems.Add(item);
                 item.isEquip = true;
             }
-            SetItemStats(item, item.isEquip);
+            SetItemStats(player, item, item.isEquip);
             Thread.Sleep(500);
         }
         /// <summary>
@@ -60,18 +60,18 @@ namespace TextRPG
             return player.equipedItems.FindIndex(x => x.itemType.Equals(item.itemType));
         }
 
-        public void SetItemStats(Item item, bool isEquip)
+        public void SetItemStats(Player player, Item item, bool isEquip)
         {
             int num = isEquip ? 1 : -1;
 
             switch(item.itemType) 
             {
                 case EItem.ARMOR:
-                    playerEquip.defense += item.ItemInfor.iDefense * num;
+                    player.playerEquip.defense += item.ItemInfor.iDefense * num;
                     isDefense = isEquip;
                     break;
                 case EItem.WEAPON:
-                    playerEquip.power += item.ItemInfor.iPower * num;
+                    player.playerEquip.power += item.ItemInfor.iPower * num;
                     isPower = isEquip;
                     break;            
             }

@@ -16,7 +16,8 @@ namespace TextRPG
         SCENE_SHOP_BUY,
         SCEME_SHOP_SELL,
         SCEME_DUNGEON,
-        SCEME_DUNGEON_CLEAR,
+        SCEME_DUNGEON_RESULT,
+        SCEME_REST,
     }
 
     public enum EItem
